@@ -3,7 +3,7 @@ HotNets'16 http://people.csail.mit.edu/hongzi/content/publications/DeepRM-HotNet
 
 Install prerequisites
 
-** Python 2.7 **
+**Python 2.7**
 
 ```
 sudo apt-get update
@@ -15,7 +15,7 @@ sudo apt-get install python-matplotlib
 
 In folder RL, create a data/ folder. 
 
-Set environment variable MKL\_THREADING\_LAYER=GNU
+Set environment variable `MKL\_THREADING\_LAYER=GNU`  
 Use `launcher.py` to launch experiments. 
 
 ```
