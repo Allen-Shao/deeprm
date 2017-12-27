@@ -16,7 +16,14 @@ sudo apt-get install python-matplotlib
 In folder RL, create a data/ folder. 
 
 Set environment variable `MKL\_THREADING\_LAYER=GNU`  
-Use `launcher.py` to launch experiments. 
+Use `launcher.py` to launch experiments.
+
+## Using GPU
+
+* cuDNN v4
+* Edit theano config in launcher.py
+
+## Parameters
 
 ```
 --exp_type <type of experiment> 
