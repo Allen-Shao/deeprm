@@ -247,18 +247,18 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
 
         timer_end = time.time()
 
-        print "-----------------"
-        print "Iteration: \t %i" % iteration
-        print "NumTrajs: \t %i" % len(eprews)
-        print "NumTimesteps: \t %i" % np.sum(eplens)
-        print "Loss:     \t %s" % loss
-        print "MaxRew: \t %s" % np.average([np.max(rew) for rew in all_eprews])
-        print "MeanRew: \t %s +- %s" % (eprews.mean(), eprews.std())
-        print "MeanSlowdown: \t %s" % np.mean(all_slowdown)
-        print "MeanLen: \t %s +- %s" % (eplens.mean(), eplens.std())
-        print "MeanEntropy \t %s" % (np.mean(all_entropy))
-        print "Elapsed time\t %s" % (timer_end - timer_start), "seconds"
-        print "-----------------"
+        print("-----------------")
+        print("Iteration: \t %i" % iteration)
+        print("NumTrajs: \t %i" % len(eprews))
+        print("NumTimesteps: \t %i" % np.sum(eplens))
+        print("Loss:     \t %s" % loss)
+        print("MaxRew: \t %s" % np.average([np.max(rew) for rew in all_eprews]))
+        print("MeanRew: \t %s +- %s" % (eprews.mean(), eprews.std()))
+        print("MeanSlowdown: \t %s" % np.mean(all_slowdown))
+        print("MeanLen: \t %s +- %s" % (eplens.mean(), eplens.std()))
+        print("MeanEntropy \t %s" % (np.mean(all_entropy)))
+        print("Elapsed time\t %s" % (timer_end - timer_start), "seconds")
+        print("-----------------")
 
         timer_start = time.time()
 

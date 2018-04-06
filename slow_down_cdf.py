@@ -113,9 +113,9 @@ def launch(pa, pg_resume=None, render=False, plot=False, repre='image', end='no_
 
             rews, info = get_traj(test_type, pa, env, pa.episode_max_length, pg_resume)
 
-            print "---------- " + test_type + " -----------"
+            print("---------- " + test_type + " -----------")
 
-            print "total discount reward : \t %s" % (discount(rews, pa.discount)[0])
+            print("total discount reward : \t %s" % (discount(rews, pa.discount)[0]))
 
             all_discount_rews[test_type].append(
                 discount(rews, pa.discount)[0]

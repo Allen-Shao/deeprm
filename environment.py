@@ -470,7 +470,7 @@ def test_backlog():
     env.step(5)
     assert env.job_backlog.backlog[0] is not None
     assert env.job_backlog.backlog[1] is None
-    print "New job is backlogged."
+    print("New job is backlogged.")
 
     env.step(5)
     env.step(5)
@@ -499,7 +499,7 @@ def test_backlog():
     env.step(3)
     assert env.job_slot.slot[3] == job
 
-    print "- Backlog test passed -"
+    print("- Backlog test passed -")
 
 
 def test_compact_speed():
@@ -520,7 +520,7 @@ def test_compact_speed():
         a = other_agents.get_sjf_action(env.machine, env.job_slot)
         env.step(a)
     end_time = time.time()
-    print "- Elapsed time: ", end_time - start_time, "sec -"
+    print("- Elapsed time: ", end_time - start_time, "sec -")
 
 
 def test_image_speed():
@@ -541,7 +541,7 @@ def test_image_speed():
         a = other_agents.get_sjf_action(env.machine, env.job_slot)
         env.step(a)
     end_time = time.time()
-    print "- Elapsed time: ", end_time - start_time, "sec -"
+    print("- Elapsed time: ", end_time - start_time, "sec -")
 
 
 if __name__ == '__main__':
