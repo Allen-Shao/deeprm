@@ -15,7 +15,7 @@ def discount(x, gamma):
     """
     out = np.zeros(len(x))
     out[-1] = x[-1]
-    for i in reversed(xrange(len(x)-1)):
+    for i in reversed(range(len(x)-1)):
         out[i] = x[i] + gamma*out[i+1]
     assert x.ndim >= 1
     # More efficient version:
@@ -52,7 +52,7 @@ def get_traj(test_type, pa, env, episode_max_length, pg_resume=None, render=Fals
 
     ob = env.observe()
 
-    for _ in xrange(episode_max_length):
+    for _ in range(episode_max_length):
 
         if test_type == 'PG':
             a = pg_learner.choose_action(ob)
@@ -105,7 +105,7 @@ def launch(pa, pg_resume=None, render=False, plot=False, repre='image', end='no_
         num_job_remain[test_type] = []
         job_remain_delay[test_type] = []
 
-    for seq_idx in xrange(pa.num_ex):
+    for seq_idx in range(pa.num_ex):
         print('\n\n')
         print("=============== " + str(seq_idx) + " ===============")
 
@@ -125,10 +125,10 @@ def launch(pa, pg_resume=None, render=False, plot=False, repre='image', end='no_
             # ---- per job stat ----
             # ------------------------
 
-            enter_time = np.array([info.record[i].enter_time for i in xrange(len(info.record))])
-            finish_time = np.array([info.record[i].finish_time for i in xrange(len(info.record))])
-            job_len = np.array([info.record[i].len for i in xrange(len(info.record))])
-            job_total_size = np.array([np.sum(info.record[i].res_vec) for i in xrange(len(info.record))])
+            enter_time = np.array([info.record[i].enter_time for i in range(len(info.record))])
+            finish_time = np.array([info.record[i].finish_time for i in range(len(info.record))])
+            job_len = np.array([info.record[i].len for i in range(len(info.record))])
+            job_total_size = np.array([np.sum(info.record[i].res_vec) for i in range(len(info.record))])
 
             finished_idx = (finish_time >= 0)
             unfinished_idx = (finish_time < 0)

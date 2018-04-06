@@ -16,7 +16,7 @@ def discount(x, gamma):
     """
     out = np.zeros(len(x))
     out[-1] = x[-1]
-    for i in reversed(xrange(len(x)-1)):
+    for i in reversed(range(len(x)-1)):
         out[i] = x[i] + gamma*out[i+1]
     assert x.ndim >= 1
     # More efficient version:
@@ -45,7 +45,7 @@ def get_traj(agent, env, episode_max_length, render=False):
 
     ob = env.observe()
 
-    for _ in xrange(episode_max_length):
+    for _ in range(episode_max_length):
         act_prob = agent.get_one_act_prob(ob)
         csprob_n = np.cumsum(act_prob)
         a = (csprob_n > np.random.rand()).argmax()
@@ -72,7 +72,7 @@ def get_traj(agent, env, episode_max_length, render=False):
 def concatenate_all_ob(trajs, pa):
 
     timesteps_total = 0
-    for i in xrange(len(trajs)):
+    for i in range(len(trajs)):
         timesteps_total += len(trajs[i]['reward'])
 
     all_ob = np.zeros(
@@ -80,8 +80,8 @@ def concatenate_all_ob(trajs, pa):
         dtype=theano.config.floatX)
 
     timesteps = 0
-    for i in xrange(len(trajs)):
-        for j in xrange(len(trajs[i]['reward'])):
+    for i in range(len(trajs)):
+        for j in range(len(trajs[i]['reward'])):
             all_ob[timesteps, 0, :, :] = trajs[i]['ob'][j]
             timesteps += 1
 
@@ -91,7 +91,7 @@ def concatenate_all_ob(trajs, pa):
 def concatenate_all_ob_across_examples(all_ob, pa):
     num_ex = len(all_ob)
     total_samp = 0
-    for i in xrange(num_ex):
+    for i in range(num_ex):
         total_samp += all_ob[i].shape[0]
 
     all_ob_contact = np.zeros(
@@ -100,7 +100,7 @@ def concatenate_all_ob_across_examples(all_ob, pa):
 
     total_samp = 0
 
-    for i in xrange(num_ex):
+    for i in range(num_ex):
         prev_samp = total_samp
         total_samp += all_ob[i].shape[0]
         all_ob_contact[prev_samp : total_samp, :, :, :] = all_ob[i]
@@ -114,9 +114,9 @@ def process_all_info(trajs):
     job_len = []
 
     for traj in trajs:
-        enter_time.append(np.array([traj['info'].record[i].enter_time for i in xrange(len(traj['info'].record))]))
-        finish_time.append(np.array([traj['info'].record[i].finish_time for i in xrange(len(traj['info'].record))]))
-        job_len.append(np.array([traj['info'].record[i].len for i in xrange(len(traj['info'].record))]))
+        enter_time.append(np.array([traj['info'].record[i].enter_time for i in range(len(traj['info'].record))]))
+        finish_time.append(np.array([traj['info'].record[i].finish_time for i in range(len(traj['info'].record))]))
+        job_len.append(np.array([traj['info'].record[i].len for i in range(len(traj['info'].record))]))
 
     enter_time = np.concatenate(enter_time)
     finish_time = np.concatenate(finish_time)
@@ -181,7 +181,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
 
     timer_start = time.time()
 
-    for iteration in xrange(pa.num_epochs):
+    for iteration in range(pa.num_epochs):
 
         all_ob = []
         all_action = []
@@ -192,12 +192,12 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
         all_entropy = []
 
         # go through all examples
-        for ex in xrange(pa.num_ex):
+        for ex in range(pa.num_ex):
 
             # Collect trajectories until we get timesteps_per_batch total timesteps
             trajs = []
 
-            for i in xrange(pa.num_seq_per_batch):
+            for i in range(pa.num_seq_per_batch):
                 traj = get_traj(pg_learner, env, pa.episode_max_length)
                 trajs.append(traj)
 
