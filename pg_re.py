@@ -2,7 +2,7 @@ import time
 import threading
 import numpy as np
 import theano
-import cPickle
+import _pickle as cPickle
 import matplotlib.pyplot as plt
 
 from multiprocessing import Process

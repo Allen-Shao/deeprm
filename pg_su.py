@@ -2,7 +2,7 @@ import numpy as np
 import theano
 import time
 import sys
-import cPickle
+import _pickle as cPickle
 
 import environment
 import pg_network
