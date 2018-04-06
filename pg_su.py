@@ -75,7 +75,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
 
         env.reset()
 
-        for _ in xrange(pa.episode_max_length):
+        for _ in range(pa.episode_max_length):
 
             # ---- get current state ----
             ob = env.observe()
@@ -113,7 +113,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
     print("Start training...")
     # ----------------------------
 
-    for epoch in xrange(pa.num_epochs):
+    for epoch in range(pa.num_epochs):
 
         # In each epoch, we do a full pass over the training data:
         train_err = 0

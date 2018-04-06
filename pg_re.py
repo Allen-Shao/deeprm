@@ -27,7 +27,7 @@ def rmsprop_updates_outside(grads, params, accums, stepsize, rho=0.9, epsilon=1e
 
     assert len(grads) == len(params)
     assert len(grads) == len(accums)
-    for dim in xrange(len(grads)):
+    for dim in range(len(grads)):
         accums[dim] = rho * accums[dim] + (1 - rho) * grads[dim] ** 2
         params[dim] += (stepsize * grads[dim] / np.sqrt(accums[dim] + epsilon))
 
@@ -39,7 +39,7 @@ def discount(x, gamma):
     """
     out = np.zeros(len(x))
     out[-1] = x[-1]
-    for i in reversed(xrange(len(x)-1)):
+    for i in reversed(range(len(x)-1)):
         out[i] = x[i] + gamma*out[i+1]
     assert x.ndim >= 1
     # More efficient version:
@@ -68,7 +68,7 @@ def get_traj(agent, env, episode_max_length):
 
     ob = env.observe()
 
-    for _ in xrange(episode_max_length):
+    for _ in range(episode_max_length):
         act_prob = agent.get_one_act_prob(ob)
         csprob_n = np.cumsum(act_prob)
         a = (csprob_n > np.random.rand()).argmax()
@@ -94,7 +94,7 @@ def get_traj(agent, env, episode_max_length):
 def concatenate_all_ob(trajs, pa):
 
     timesteps_total = 0
-    for i in xrange(len(trajs)):
+    for i in range(len(trajs)):
         timesteps_total += len(trajs[i]['reward'])
 
     all_ob = np.zeros(
@@ -102,8 +102,8 @@ def concatenate_all_ob(trajs, pa):
         dtype=theano.config.floatX)
 
     timesteps = 0
-    for i in xrange(len(trajs)):
-        for j in xrange(len(trajs[i]['reward'])):
+    for i in range(len(trajs)):
+        for j in range(len(trajs[i]['reward'])):
             all_ob[timesteps, 0, :, :] = trajs[i]['ob'][j]
             timesteps += 1
 
@@ -113,7 +113,7 @@ def concatenate_all_ob(trajs, pa):
 def concatenate_all_ob_across_examples(all_ob, pa):
     num_ex = len(all_ob)
     total_samp = 0
-    for i in xrange(num_ex):
+    for i in range(num_ex):
         total_samp += all_ob[i].shape[0]
 
     all_ob_contact = np.zeros(
@@ -122,7 +122,7 @@ def concatenate_all_ob_across_examples(all_ob, pa):
 
     total_samp = 0
 
-    for i in xrange(num_ex):
+    for i in range(num_ex):
         prev_samp = total_samp
         total_samp += all_ob[i].shape[0]
         all_ob_contact[prev_samp : total_samp, :, :, :] = all_ob[i]
@@ -136,9 +136,9 @@ def process_all_info(trajs):
     job_len = []
 
     for traj in trajs:
-        enter_time.append(np.array([traj['info'].record[i].enter_time for i in xrange(len(traj['info'].record))]))
-        finish_time.append(np.array([traj['info'].record[i].finish_time for i in xrange(len(traj['info'].record))]))
-        job_len.append(np.array([traj['info'].record[i].len for i in xrange(len(traj['info'].record))]))
+        enter_time.append(np.array([traj['info'].record[i].enter_time for i in range(len(traj['info'].record))]))
+        finish_time.append(np.array([traj['info'].record[i].finish_time for i in range(len(traj['info'].record))]))
+        job_len.append(np.array([traj['info'].record[i].len for i in range(len(traj['info'].record))]))
 
     enter_time = np.concatenate(enter_time)
     finish_time = np.concatenate(finish_time)
@@ -184,7 +184,7 @@ def get_traj_worker(pg_learner, env, pa, result):
 
     trajs = []
 
-    for i in xrange(pa.num_seq_per_batch):
+    for i in range(pa.num_seq_per_batch):
         traj = get_traj(pg_learner, env, pa.episode_max_length)
         trajs.append(traj)
 
@@ -233,7 +233,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
 
     nw_len_seqs, nw_size_seqs = job_distribution.generate_sequence_work(pa, seed=42)
 
-    for ex in xrange(pa.num_ex):
+    for ex in range(pa.num_ex):
 
         print("-prepare for env-", ex)
 
@@ -242,7 +242,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
         env.seq_no = ex
         envs.append(env)
 
-    for ex in xrange(pa.batch_size + 1):  # last worker for updating the parameters
+    for ex in range(pa.batch_size + 1):  # last worker for updating the parameters
 
         print("-prepare for worker-", ex)
 
@@ -272,7 +272,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
 
     timer_start = time.time()
 
-    for iteration in xrange(1, pa.num_epochs):
+    for iteration in range(1, pa.num_epochs):
 
         ps = []  # threads
         manager = Manager()  # managing return results
@@ -290,7 +290,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
         all_entropy = []
 
         ex_counter = 0
-        for ex in xrange(pa.num_ex):
+        for ex in range(pa.num_ex):
 
             ex_idx = ex_indices[ex]
             p = Process(target=get_traj_worker,
@@ -338,8 +338,8 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
 
         # assemble gradients
         grads = grads_all[0]
-        for i in xrange(1, len(grads_all)):
-            for j in xrange(len(grads)):
+        for i in range(1, len(grads_all)):
+            for j in range(len(grads)):
                 grads[j] += grads_all[i][j]
 
         # propagate network parameters to others
@@ -347,7 +347,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
 
         rmsprop_updates_outside(grads, params, accums, pa.lr_rate, pa.rms_rho, pa.rms_eps)
 
-        for i in xrange(pa.batch_size + 1):
+        for i in range(pa.batch_size + 1):
             pg_learners[i].set_net_params(params)
 
         timer_end = time.time()
