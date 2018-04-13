@@ -278,7 +278,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
         manager = Manager()  # managing return results
         manager_result = manager.list([])
 
-        ex_indices = range(pa.num_ex)
+        ex_indices = list(range(pa.num_ex))
         np.random.shuffle(ex_indices)
 
         all_eprews = []

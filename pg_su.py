@@ -53,7 +53,7 @@ def launch(pa, pg_resume=None, render=False, repre='image', end='no_new_job'):
     print("Preparing for data...")
     # ----------------------------
 
-    nw_len_seqs, nw_size_seqs = job_distribution.generate_sequence_work(pa, seed=42)
+    # nw_len_seqs, nw_size_seqs = job_distribution.generate_sequence_work(pa, seed=42)
 
     # print 'nw_time_seqs=', nw_len_seqs
     # print 'nw_size_seqs=', nw_size_seqs

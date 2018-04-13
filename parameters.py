@@ -23,7 +23,7 @@ class Parameters:
 
         self.time_horizon = 20         # number of time steps in the graph
         self.max_job_len = 15          # maximum duration of new jobs
-        self.res_slot = 10             # maximum number of available resource slots
+        self.res_slot = 100          # maximum number of available resource slots
         self.max_job_size = 10         # maximum resource request of new work
 
         self.backlog_size = 60         # backlog queue size

@@ -5,6 +5,7 @@ import theano
 
 import parameters
 
+import csv
 
 class Env:
     def __init__(self, pa, nw_len_seqs=None, nw_size_seqs=None,
@@ -55,16 +56,46 @@ class Env:
         self.job_record = JobRecord()
         self.extra_info = ExtraInfo(pa)
 
+    # def generate_sequence_work(self, simu_len):
+
+    #     print("environment generate sequence work")
+
+    #     nw_len_seq = np.zeros(simu_len, dtype=int)
+    #     nw_size_seq = np.zeros((simu_len, self.pa.num_res), dtype=int)
+
+    #     for i in range(simu_len):
+
+    #         if np.random.rand() < self.pa.new_job_rate:  # a new job comes
+
+    #             nw_len_seq[i], nw_size_seq[i, :] = self.nw_dist()
+
+
+    #     return nw_len_seq, nw_size_seq
+
     def generate_sequence_work(self, simu_len):
+
+        print("environment generate sequence work")
 
         nw_len_seq = np.zeros(simu_len, dtype=int)
         nw_size_seq = np.zeros((simu_len, self.pa.num_res), dtype=int)
 
-        for i in range(simu_len):
+        # for i in range(simu_len):
 
-            if np.random.rand() < self.pa.new_job_rate:  # a new job comes
+        #     if np.random.rand() < self.pa.new_job_rate:  # a new job comes
 
-                nw_len_seq[i], nw_size_seq[i, :] = self.nw_dist()
+        #         nw_len_seq[i], nw_size_seq[i, :] = self.nw_dist()
+        
+        print(simu_len)
+        
+        with open('dataset_deeprm.csv', newline='') as csvfile:
+            spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+            for row in spamreader:
+                splited = row[0].split(',')
+                if (int(splited[0]) > simu_len):
+                    break
+                nw_len_seq[int(splited[0])] = int(splited[1])
+                nw_size_seq[int(splited[0]), 0] = int(splited[2]) / 100.0
+                nw_size_seq[int(splited[0]), 1] = int(splited[3]) / 1024.0 / 1024.0 / 100.0
 
         return nw_len_seq, nw_size_seq
 

@@ -61,6 +61,8 @@ class Dist:
 
 def generate_sequence_work(pa, seed=42):
 
+    print("job distribution generate sequence work.")
+
     np.random.seed(seed)
 
     simu_len = pa.simu_len * pa.num_ex
